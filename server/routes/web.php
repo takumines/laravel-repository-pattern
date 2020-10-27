@@ -13,3 +13,7 @@
 
 Route::get('/sample', 'SampleController@index');
 Route::get('/', 'BookListController@index');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
