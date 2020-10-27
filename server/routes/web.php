@@ -12,3 +12,4 @@
 */
 
 Route::get('/sample', 'SampleController@index');
+Route::get('/', 'BookListController@index');
