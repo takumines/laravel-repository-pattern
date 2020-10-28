@@ -21,8 +21,5 @@ class BookListController extends Controller
         foreach ($list->getIterator() as $d) {
             echo $d->getTitle();
         }
-        dd($list);
-
-        return view('book_list', ['list' => $list]);
     }
 }
