@@ -11,9 +11,19 @@
 |
 */
 
-Route::get('/sample', 'SampleController@index');
-Route::get('/', 'BookListController@index');
+//Route::get('/sample', 'SampleController@index');
+//Route::get('/', 'BookListController@index');
+
+
+use App\User;
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('user_search', function() {
+    $users = User::search('takumi')->get();
+    foreach ($users as $user) {
+        echo '<li>' . $user->name . '</li>';
+    }
+});
