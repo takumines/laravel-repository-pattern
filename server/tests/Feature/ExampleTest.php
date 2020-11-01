@@ -16,7 +16,7 @@ class ExampleTest extends TestCase
     {
         $nums = [2,7,11,15];
         $target = 9;
-        $result = $this->twoSum($nums, $target);
+        $result = $this->twoSum2($nums, $target);
 
         $this->assertEquals($result, [0,1]);
     }
@@ -34,6 +34,16 @@ class ExampleTest extends TestCase
             }
             unset($nums[$i]);
             $i++;
+        }
+    }
+
+    function twoSum2($nums ,$target) {
+        $tempArray = array();
+        foreach($nums as $key=>$num){
+            if(isset($tempArray[$target - $num])){
+                return [$tempArray[$target - $num], $key];
+            }
+            $tempArray[$num] = $key;
         }
     }
 }
