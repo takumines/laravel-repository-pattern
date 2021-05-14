@@ -19,7 +19,12 @@ use App\User;
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::get('/posts', 'PostController@index');
+Route::post('posts', 'PostController@store');
+Route::post('posts/{post}', 'PostController@update');
+Route::delete('posts/{post}', 'PostController@destroy');
 
 Route::get('user_search', function() {
     $users = User::search('takumi')->get();

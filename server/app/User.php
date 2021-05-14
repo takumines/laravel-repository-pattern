@@ -44,8 +44,11 @@ class User extends Authenticatable
         // TODO: Implement resolveChildRouteBinding() method.
     }
 
-    public function post()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts()
     {
-        $this->hasOne('App\Post');
+        return $this->hasMany('App\Post');
     }
 }

@@ -3,38 +3,41 @@
 namespace App\Http\Controllers;
 
 use App\Post;
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
-    public function store(Request $request, User $user, Post $post)
+    /**
+     * 投稿一覧
+     *
+     * @param Post $post
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(Post $post)
     {
-        // withoutSyncingToSearchメソッドを実装することでインデックスとデータの同期が行われない
-//        $post->withoutSyncingToSearch(function () use ($user, $request, $post) {
-            $currentUser = $user->find($request->user_id);
-            $post->title = $request->title;
-            $post->body = $request->body;
-            $post->user_id = $currentUser->id;
+        $posts = $post->all();
 
-            $post->save();
-            $post->searchable();
-//        });
-
-
-        return response()->json([
-            'post' => $post
-                                ]);
+        return view('posts.index', compact('posts'));
     }
 
-    public function update(Request $request)
+    /**
+     * 投稿フォーム
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showCreateFrom()
     {
-
+        return view('posts.create');
     }
 
-    public function destroy(Post $post)
+    public function create(Request $request, Post $post)
     {
-        $post->unsearchable();
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $user = $request->user();
+
+        $user->posts()->save($post);
+
+        return redirect()->route('posts.index');
     }
 }
